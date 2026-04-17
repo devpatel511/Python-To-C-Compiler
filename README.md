@@ -1,7 +1,7 @@
 # Python To C Compiler/Transpiler
 
 ## Overview
-A completely functional compiler implementation from **Python** to **C**. Visualization of E2E compilation pipeline:
+A completely functional compiler implementation from **Python** to **C**. Visualization of the E2E compilation pipeline:
 
 ![Compilation Pipeline](assets/compiler_pipeline.png)
 
@@ -14,12 +14,12 @@ There are ***3*** stages to the compiler:
 ## Optimizations & Results
 The optimization passes operate on the produced IR through a multi-pass pipeline, where each pass transforms the code with the purpose of simplifying or reducing computation. The implemented optimizations are (applied in this exact order):
 
-1. **Constant Propagation:** Replaces variables with known constant values
-2. **Constant Folding:** Evaluates expressions involving constants at compile time
-3. **Copy Propagation:** Eliminates redundant variable copies by replacing one with another
-4. **Common Subexpression Elimination:** Reuses previously computed expressions
-5. **Strength Reduction:** Replaces expensive operations with cheaper ones
-6. **Dead Code Elimination:** Removes code that does not affect the program output
+1. ***Constant Propagation:*** Replaces variables with known constant values
+2. ***Constant Folding:*** Evaluates expressions involving constants at compile time
+3. ***Copy Propagation:*** Eliminates redundant variable copies by replacing one with another
+4. ***Common Subexpression Elimination:*** Reuses previously computed expressions
+5. ***Strength Reduction:*** Replaces expensive operations with cheaper ones
+6. ***Dead Code Elimination:*** Removes code that does not affect the program output
 
 Below is a graph detailing improvements, on various examples, made by the optimizations:
 
