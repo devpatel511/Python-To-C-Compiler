@@ -363,7 +363,7 @@ def TheComPylersIROptimizer(ir_code, iterations=3):
     for _ in range(iterations):
         prev = current
 
-        # OPTIMIZATION ORDER MATTERS as seen in week 7 IR optimization starter code, hence went with that order.
+        # OPTIMIZATION ORDER MATTERS
         current = constant_propagation(current)
         current = constant_folding(current)
         current = copy_propagation(current)

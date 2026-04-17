@@ -1,0 +1,14 @@
+#include <stdbool.h>
+
+int main(void) {
+    int number = 7;
+    bool is_even = false;
+    bool is_odd = false;
+    bool _t2 = false;
+    if (_t2) {
+        is_even = true;
+    } else {
+        is_odd = true;
+    }
+    return 0;
+}
