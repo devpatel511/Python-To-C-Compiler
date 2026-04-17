@@ -1,0 +1,59 @@
+# Reserved Keywords
+DEF		    = "def"
+IF       	= "if"
+ELSE     	= "else"
+WHILE    	= "while"
+RETURN   	= "return"
+TRUE     	= "True"
+FALSE    	= "False"
+AND      	= "and"
+OR       	= "or"
+NOT      	= "not"
+LEN         = "len"
+
+INT_TYPE 	= "int"
+BOOL_TYPE 	= "bool"
+LIST_TYPE 	= "list"
+
+# Operators
+PLUS     	= "+"
+MINUS    	= "-"
+TIMES    	= "*"
+DIVIDE   	= "/"
+MODULO   	= "%"
+
+LESSEQ      = "<="
+LESS      	= "<"
+GREATEREQ   = ">="
+GREATER     = ">"
+EQOP        = "=="
+NEQ      	= "!="
+
+EQ   		= "="
+
+# Punctuation
+COLON    	= ":"
+COMMA    	= ","
+ARROW    	= "->"
+
+LPAREN   	= "("
+RPAREN   	= ")"
+LBRACK   	= "["
+RBRACK   	= "]"
+NEWLINE  	= "\n"
+
+COMMENT     = "#" .* (in regex we can write '#.*')
+
+INDENT   	= <injected during data preprocessing, see scanner.py>
+DEDENT   	= <injected during data preprocessing, see scanner.py>
+
+# NOTE: below we use regex and emit the quotation marks, but they still represent terminal states
+
+# Literals
+INT	        = \d+ (from week 2 exercise)
+
+# Identifiers
+ID 		    = [a-zA-Z_][a-zA-Z0-9_]* (from week 2 exercise)
+
+# Whitespace
+WHITESPACE  = [ \t]+ (similar to week 2 exercise, we will assign “ \t” to t_ignore for PLY)
