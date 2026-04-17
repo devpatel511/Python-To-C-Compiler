@@ -1,33 +1,39 @@
-program 		        = {function_def} statement_list
+# Context-free Grammar
 
-function_def 	        = DEF ID LPAREN param_list RPAREN ARROW type COLON statement_list
-param_list 	            = EPSILON | param {COMMA param}
-param 		            = ID COLON type
-type 			        = INT_TYPE | BOOL_TYPE | LIST_TYPE LBRACK INT_TYPE RBRACK
+program                 = item_list | EPSILON
+item_list               = item_list item | item
+item                    = function_def | statement
 
-statement_list 	        = [statement_list] statement
-statement 		        = assignment_statement | if_statement | while_statement | return_statement
-assignment_statement 	= ID EQ expression
-if_statement 		    = IF expression COLON statement_list [ELSE COLON statement_list]
-while_statement 		= WHILE expression COLON statement_list
-return_statement		= RETURN expression
+function_def            = DEF ID LPAREN param_list RPAREN ARROW type COLON NEWLINE INDENT statement_list DEDENT
+param_list              = params | EPSILON
+params                  = params COMMA param | param
+param                   = ID COLON type
+type                    = INT_TYPE | BOOL_TYPE | LIST_TYPE LBRACK INT_TYPE RBRACK
 
-expression 		        = boolean_expression | or_expression
+statement_list          = statement_list statement | statement
+statement               = simple_statement NEWLINE | compound_statement | NEWLINE | COMMENT NEWLINE (NOTE: we are just allowing comments on their own line)
+simple_statement        = assignment_statement | return_statement
+compound_statement      = if_statement | while_statement
 
-boolean_expression      = boolean_term {OR boolean_term}
-boolean_term            = boolean_factor {AND boolean_factor}
-boolean_factor          = NOT boolean_factor | TRUE | FALSE
+assignment_statement    = ID EQ expression
+if_statement            = IF expression COLON NEWLINE INDENT statement_list DEDENT | IF expression COLON NEWLINE INDENT statement_list DEDENT ELSE COLON NEWLINE INDENT statement_list DEDENT
+while_statement         = WHILE expression COLON NEWLINE INDENT statement_list DEDENT
+return_statement        = RETURN expression
 
-or_expression           = and_expression {OR and_expression}
-and_expression          = comparison {AND comparison}
-comparison              = arith_expression {(LESSEQ | LESS | GREATER | GREATEREQ | EQOP | NEQ) arith_expression}
-arith_expression        = term {(PLUS | MINUS) term}
-term                    = factor {(TIMES | DIVIDE | MODULO) factor}
-factor 		            = MINUS factor | INT | ID | ID LPAREN args_list RPAREN | LPAREN expression RPAREN | list_literal | len_expression
+# NOTE: ordered by precedence, lowest to highest
+expression              = or_expression
+or_expression           = or_expression OR and_expression | and_expression
+and_expression          = and_expression AND not_expression | not_expression
+not_expression          = NOT not_expression | comparison
+comparison              = comparison LESSEQ arith_expression | comparison LESS arith_expression | comparison GREATER arith_expression | comparison GREATEREQ arith_expression | comparison EQOP arith_expression | comparison NEQ arith_expression | arith_expression
+arith_expression        = arith_expression PLUS term | arith_expression MINUS term | term
+term                    = term TIMES factor | term DIVIDE factor | term MODULO factor | factor
 
-len_expression          = LEN LPAREN expression RPAREN
+# NOTE: ordered by precedence, lowest to highest (when read left to right in this case)
+factor                  = MINUS factor | INT | TRUE | FALSE | ID | ID LPAREN args_list RPAREN | ID LBRACK expression RBRACK | LPAREN expression RPAREN | list_literal | LEN LPAREN expression RPAREN
 
-list_literal	        = LBRACK [expression {COMMA expression}] RBRACK
-args_list 	            = EPSILON | expression {COMMA expression}
+list_literal            = LBRACK RBRACK | LBRACK expr_list RBRACK
+expr_list               = expr_list COMMA expression | expression
+args_list               = expr_list | EPSILON
 
-EPSILON 	            = <Nothing>
+EPSILON                 = <Nothing>
